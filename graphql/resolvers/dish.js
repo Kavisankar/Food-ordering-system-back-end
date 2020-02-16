@@ -4,7 +4,11 @@ const utils = require('./utils');
 module.exports = {
   getMenu: async () => {
     try {
-      const dishes = await Dish.find()
+      const dishes = await Dish.find({
+        availability: {
+          $eq: true
+        }
+      }).sort('name');
       return utils.parseDishes(dishes);
     }
     catch(err) {
