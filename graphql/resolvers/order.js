@@ -2,7 +2,10 @@ const Order = require('../../models/order');
 const utils = require('./utils');
 
 module.exports = {
-  getOrderList: async () => {
+  getOrderList: async (args, req) => {
+    if (!req.isAuth) {
+      return Error('Unauthenticated!');
+    }
     try {
       const orders = await Order.find();
       return orders.map( order => {
@@ -17,7 +20,10 @@ module.exports = {
       throw err;
     };
   },
-  viewOrder: async args => {
+  viewOrder: async (args, req) => {
+    if (!req.isAuth) {
+      return Error('Unauthenticated!');
+    }
     try {
       if (!utils.validateID(args.id)) {
         return Error("Invalid dish id");
@@ -35,7 +41,7 @@ module.exports = {
       throw err;
     };
   },
-  removeOrder: async args => {
+  removeOrder: async (args, req) => {
     try {
       if (!utils.validateID(args.id)) {
         return Error("Invalid dish id");

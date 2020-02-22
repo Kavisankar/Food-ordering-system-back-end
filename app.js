@@ -9,6 +9,7 @@ const app = express();
 
 const rootSchema = require('./graphql/schema');
 const rootResolver = require('./graphql/resolvers');
+const isAuth = require('./middleware/is-auth');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -25,6 +26,8 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+app.use(isAuth);
 
 app.use(
   '/graphql',

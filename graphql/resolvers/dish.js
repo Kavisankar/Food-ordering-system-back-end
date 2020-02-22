@@ -2,6 +2,19 @@ const Dish = require('../../models/dish');
 const utils = require('./utils');
 
 module.exports = {
+  getDishes: async (args, req) => {
+    if (!req.isAuth) {
+      return Error('Unauthenticated!');
+    }
+    try {
+      const dishes = await Dish.find().sort('name');
+      return utils.parseDishes(dishes);
+    }
+    catch(err) {
+      console.log(err);
+      throw err;
+    };
+  },
   getMenu: async () => {
     try {
       const dishes = await Dish.find({
@@ -19,7 +32,10 @@ module.exports = {
   viewDish: async args => {
     return utils.viewDish(args.id);
   },
-  addDish: async arg => {
+  addDish: async (arg, req) => {
+    if (!req.isAuth) {
+      return Error('Unauthenticated!');
+    }
     try {
       let dish = await Dish.findOne({name: arg.dish.name});
       console.log(dish);
@@ -40,7 +56,10 @@ module.exports = {
       throw err;
     };
   },
-  removeDish: async args => {
+  removeDish: async (args, req) => {
+    if (!req.isAuth) {
+      return Error('Unauthenticated!');
+    }
     try {
       if (!utils.validateID(args.id)) {
         return Error("Invalid dish id!");
@@ -56,7 +75,10 @@ module.exports = {
       throw err;
     };
   },
-  updateDish: async args => {
+  updateDish: async (args, req) => {
+    if (!req.isAuth) {
+      return Error('Unauthenticated!');
+    }
     try {
       if (!utils.validateID(args.dish.id)) {
         return Error("Invalid dish id!");

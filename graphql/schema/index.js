@@ -54,14 +54,21 @@ module.exports = graphql.buildSchema(`
     dishes: [DishIDWithQuantity!]!
   }
 
+  type Token {
+    token: String!,
+    tokenExpiration: Int!
+  }
+
   type RootQuery {
     getMenu: [Dish!]!
+    getDishes: [Dish!]!
     getOrderList: [Order!]!
     viewDish(id: String!): Dish!
     viewOrder(id: String!): Order!
   }
 
   type RootMutation {
+    login(name: String!, pswd: String!): Token!
     addDish(dish: DishInput!): Dish!
     removeDish(id: String!): Dish!
     updateDish(dish: DishUpdateInput!): Dish!

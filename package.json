@@ -7,11 +7,13 @@
     "start-dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^4.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-graphql": "^0.9.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.9",
     "morgan": "~1.9.1"
   },
@@ -19,5 +21,17 @@
     "@types/graphql": "^14.5.0",
     "@types/node": "^13.5.0",
     "nodemon": "^2.0.2"
-  }
+  },
+  "description": "��#\u0000 \u0000F\u0000o\u0000o\u0000d\u0000-\u0000o\u0000r\u0000d\u0000e\u0000r\u0000i\u0000n\u0000g\u0000-\u0000s\u0000y\u0000s\u0000t\u0000e\u0000m\u0000-\u0000b\u0000a\u0000c\u0000k\u0000-\u0000e\u0000n\u0000d\u0000\r\u0000 \u0000",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kavisankar/Food-ordering-system-back-end.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kavisankar/Food-ordering-system-back-end/issues"
+  },
+  "homepage": "https://github.com/Kavisankar/Food-ordering-system-back-end#readme"
 }
