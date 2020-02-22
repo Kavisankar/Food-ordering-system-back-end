@@ -2,12 +2,34 @@ const Order = require('../../models/order');
 const utils = require('./utils');
 
 module.exports = {
-  getOrderList: async (args, req) => {
+  getAllOrderList: async (args, req) => {
     if (!req.isAuth) {
       return Error('Unauthenticated!');
     }
     try {
       const orders = await Order.find();
+      return orders.map( order => {
+        return { ...order._doc,
+          id: order.id,
+          placedOn: order.placedOn.toISOString(),
+          dishes: utils.parseDishesWithQuantity.bind(this,order.dishes)
+        };
+      });
+    }
+    catch(err) {
+      throw err;
+    };
+  },
+  getOrderList: async (args, req) => {
+    if (!req.isAuth) {
+      return Error('Unauthenticated!');
+    }
+    try {
+      const orders = await Order.find({
+        isDelivered: {
+          $eq: false
+        }
+      }).sort('placedOn');
       return orders.map( order => {
         return { ...order._doc,
           id: order.id,
@@ -42,11 +64,40 @@ module.exports = {
     };
   },
   removeOrder: async (args, req) => {
+    if (!req.isAuth) {
+      return Error('Unauthenticated!');
+    }
     try {
       if (!utils.validateID(args.id)) {
         return Error("Invalid dish id");
       }
       const order = await Order.findByIdAndDelete(args.id);
+      if(!order) {
+        return Error("Order not found!");
+      }
+      return { ...order._doc,
+        id: order.id,
+        placedOn: order.placedOn.toISOString(),
+        dishes: utils.parseDishesWithQuantity.bind(this,order.dishes) };
+    }
+    catch(err) {
+      throw err;
+    };
+  },
+  updateOrderDelivery: async (args, req) => {
+    if (!req.isAuth) {
+      return Error('Unauthenticated!');
+    }
+    try {
+      if (!utils.validateID(args.id)) {
+        return Error("Invalid dish id");
+      }
+      const order = await Order.findOneAndUpdate(
+        { _id: args.id },
+        { $set: {
+          "isDelivered" : true,
+        }}
+      );
       if(!order) {
         return Error("Order not found!");
       }

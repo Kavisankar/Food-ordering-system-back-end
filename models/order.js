@@ -17,6 +17,11 @@ const orderSchema = mongoose.Schema({
     type: Date,
     require: true
   },
+  isDelivered: {
+    type: Boolean,
+    require: true,
+    default: false
+  },
   dishes: [
     {
       dish: {

@@ -44,6 +44,7 @@ module.exports = graphql.buildSchema(`
     customerPhoneNo: String!
     customerAddress: String!
     placedOn: String!
+    isDelivered: Boolean!
     dishes: [DishWithQuantity!]!
   }
 
@@ -62,6 +63,7 @@ module.exports = graphql.buildSchema(`
   type RootQuery {
     getMenu: [Dish!]!
     getDishes: [Dish!]!
+    getAllOrderList: [Order!]!
     getOrderList: [Order!]!
     viewDish(id: String!): Dish!
     viewOrder(id: String!): Order!
@@ -74,6 +76,7 @@ module.exports = graphql.buildSchema(`
     updateDish(dish: DishUpdateInput!): Dish!
     placeOrder(order: OrderInput): Order!
     removeOrder(id: String!): Order!
+    updateOrderDelivery(id: String!): Order!
   }
 
   schema {
