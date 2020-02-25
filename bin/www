@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+require('dotenv').config({path: __dirname + '/app.env'})
 var app = require('../app');
 var debug = require('debug')('food-ordering-system-back-end:server');
 var http = require('http');
