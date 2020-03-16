@@ -7,7 +7,7 @@ module.exports = {
       return Error('Unauthenticated!');
     }
     try {
-      const dishes = await Dish.find().sort('name');
+      const dishes = await Dish.find().collation({locale: "en" }).sort('name');
       return utils.parseDishes(dishes);
     }
     catch(err) {
@@ -21,7 +21,7 @@ module.exports = {
         availability: {
           $eq: true
         }
-      }).sort('name');
+      }).collation({locale: "en" }).sort('name');
       return utils.parseDishes(dishes);
     }
     catch(err) {
@@ -37,7 +37,8 @@ module.exports = {
       return Error('Unauthenticated!');
     }
     try {
-      let dish = await Dish.findOne({name: arg.dish.name});
+      let regex = new RegExp(["^", arg.dish.name, "$"].join(""), "i");
+      let dish = await Dish.findOne({name: regex});
       console.log(dish);
       if(dish){
         return Error("This dish is already exist!");
